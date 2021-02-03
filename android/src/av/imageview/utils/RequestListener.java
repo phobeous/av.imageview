@@ -32,6 +32,9 @@ public class RequestListener implements com.bumptech.glide.request.RequestListen
 
     @Override
     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
+        // #111 (Hans )
+        if (this.proxy == null || this.proxy.get() == null) { return false; }
+
         KrollDict currentProperties = this.proxy.get().getProperties();
 
         if (this.proxy.get().hasListeners(ImageViewConstants.EVENT_IMAGE_LOAD_ERROR)) {
@@ -57,6 +60,7 @@ public class RequestListener implements com.bumptech.glide.request.RequestListen
 
     @Override
     public boolean onResourceReady(Object resource, Object model, Target target, DataSource dataSource, boolean isFirstResource) {
+        if (this.proxy == null || this.proxy.get() == null) { return false; }
         KrollDict currentProperties = this.proxy.get().getProperties();
 
         if (this.proxy.get().hasListeners(ImageViewConstants.EVENT_IMAGE_LOADED)) {
